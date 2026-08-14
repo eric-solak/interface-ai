@@ -58,15 +58,8 @@ command it prints.
 the capability id the model picks can vary slightly run to run, so check the
 `discovery complete -> ...` line it prints and use that path for replay.
 
-> **Every multi-word flag value must be one quoted string** (`--goal "..."`).
-> Bash's `\` line continuation is **not** valid in PowerShell — do not mix
-> them. The CLI now rejects unrecognized stray tokens outright rather than
-> silently dropping them, so a copy-paste mistake here fails immediately with
-> a clear error instead of quietly corrupting `--goal` or a `--secret-param`
-> value and looping.
-
 ```bash
-# bash / zsh
+# bash
 npm run discover -- --goal "Look up member 12345 and read their current savings balance" \
   --url http://127.0.0.1:4173/ \
   --param member_id=12345 \
@@ -74,8 +67,7 @@ npm run discover -- --goal "Look up member 12345 and read their current savings 
 ```
 
 ```powershell
-# PowerShell — backtick (`) continues a line, not backslash; keep it on one
-# line if in doubt
+# PowerShell
 npm run discover -- --goal "Look up member 12345 and read their current savings balance" `
   --url http://127.0.0.1:4173/ `
   --param member_id=12345 `
@@ -90,38 +82,33 @@ npm run replay -- --artifact artifacts/member-savings-lookup.v1.0.0.json --param
 ```
 
 **Exceptional-state replays** (`$A` = the artifact path, `$S` = the two
-`--secret-param` flags above — spell them out again in PowerShell, which has
-no `$A`/`$S` shorthand unless you set them as variables first):
+`--secret-param` flags above)
 
 ```bash
 A=artifacts/member-savings-lookup.v1.0.0.json
 S="--secret-param operator_id=teller1 --secret-param passcode=demo-pass"
 
-# expected business outcome, not a crash:
-npm run replay -- --artifact $A --param member_id=99999 $S
-#   -> {"status":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}
-npm run replay -- --artifact $A --param member_id=66600 $S   # -> PERMISSION_DENIED
+# expected business outcomes:
+
+npm run replay -- --artifact $A --param member_id=99999 $S # {"status":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}
+npm run replay -- --artifact $A --param member_id=66600 $S # PERMISSION_DENIED
 
 # typed-input validation, before the browser is even touched:
-npm run replay -- --artifact $A --param member_id=abc $S
-#   -> {"status":"hard_failure",...} in 0ms — rejected by the recorded pattern
+npm run replay -- --artifact $A --param member_id=abc $S # {"status":"hard_failure",...} in 0ms — rejected by the recorded pattern
 
 # recoverable condition (scripted recovery, then success):
-npm run replay -- --artifact $A --param member_id=12345 $S --inject expire
-#   session dies mid-flow -> detector -> re-login from s1 -> success
+npm run replay -- --artifact $A --param member_id=12345 $S --inject expire # session dies mid-flow -> detector -> re-login from s1 -> success
 
 # hard failure (structured, debuggable):
-npm run replay -- --artifact $A --param member_id=12345 $S --inject break
-#   -> {"status":"hard_failure","failure":{...}} + failure screenshot
+npm run replay -- --artifact $A --param member_id=12345 $S --inject break # {"status":"hard_failure","failure":{...}} + failure screenshot
 ```
 
 **Human-in-the-loop handoff** (best experienced headed):
 
 ```bash
-npm run replay -- --artifact $A --param member_id=12345 $S --headed   # if a step gets stuck ->
-# intervention is raised, the browser window stays open, control cedes to human
-npm run operator                                 # terminal 3: review, act in the
-# live window, enter a resolution note -> control returns, the run resumes
+npm run replay -- --artifact $A --param member_id=12345 $S --headed # if a step gets stuck -> intervention is raised, the browser window stays open, control cedes to human
+
+npm run operator # terminal 3: review, act in the live window, enter a resolution note -> control returns, the run resumes
 ```
 
 Replay flags: `--headed`, `--approve-risky` (pre-approve risky/irreversible
