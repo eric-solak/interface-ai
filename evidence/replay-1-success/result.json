@@ -1,0 +1,10 @@
+{
+  "capabilityId": "member-savings-lookup",
+  "runId": "20260814-123019",
+  "evidenceDir": "evidence\\replay-1-success",
+  "status": "success",
+  "outputs": {
+    "savings_balance": "$4,982.17"
+  },
+  "durationMs": 1549
+}

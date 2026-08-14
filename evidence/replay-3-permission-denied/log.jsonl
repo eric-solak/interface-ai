@@ -1,0 +1,10 @@
+{"at":"2026-08-14T16:30:27.345Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:30:27.529Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:27.694Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:27.814Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:27.979Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:28.267Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:28.415Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:28.564Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:28.696Z","event":"replay.condition_detected","detectorId":"lib-permission-denied","classify":"business_outcome","outcomeCode":"PERMISSION_DENIED"}
+{"at":"2026-08-14T16:30:28.737Z","event":"replay.result","status":"business_outcome","outcomeCode":"PERMISSION_DENIED"}

@@ -1,0 +1,11 @@
+{"at":"2026-08-14T16:30:49.281Z","event":"replay.fault_injected","inject":"break"}
+{"at":"2026-08-14T16:30:49.283Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:30:49.339Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:49.497Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:49.616Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:49.801Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:50.040Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:50.191Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:50.353Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:50.479Z","event":"replay.condition_detected","detectorId":"server-error","classify":"hard_failure","outcomeCode":"SERVER_ERROR"}
+{"at":"2026-08-14T16:30:50.531Z","event":"replay.result","status":"hard_failure"}

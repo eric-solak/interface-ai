@@ -1,0 +1,12 @@
+{"at":"2026-08-14T16:31:09.767Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:31:09.978Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:31:10.132Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:31:10.247Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:31:10.407Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:31:10.631Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:31:20.919Z","event":"replay.step_failed","stepId":"s6","reason":"Error: could not resolve \"textbox \"Member Number:\"\" in frame \"main\" — label-text: no visible match; css: no visible match","screenshot":"evidence\\replay-7-escalation-handoff\\failure-s6.png"}
+{"at":"2026-08-14T16:31:20.950Z","event":"escalation.raised","interventionId":"iv-1786725080921","reason":"step failed and no detector explains the state: Error: could not resolve \"textbox \"Member Number:\"\" in frame \"main\" — label-text: no visible match; css: no visible match","screenshot":"evidence\\replay-7-escalation-handoff\\intervention-iv-1786725080921.png"}
+{"at":"2026-08-14T16:31:23.993Z","event":"escalation.resumed","interventionId":"iv-1786725080921","resolution":"operator resolved the step manually in the live window","humanActions":[]}
+{"at":"2026-08-14T16:31:24.029Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:31:24.146Z","event":"replay.condition_detected","detectorId":"member-not-found","classify":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}
+{"at":"2026-08-14T16:31:24.173Z","event":"replay.result","status":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}

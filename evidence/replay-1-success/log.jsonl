@@ -1,0 +1,10 @@
+{"at":"2026-08-14T16:30:19.761Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:30:20.092Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:20.227Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:20.354Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:20.509Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:20.749Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:20.883Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:21.045Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:21.172Z","event":"replay.step_ok","stepId":"s8","action":"extract"}
+{"at":"2026-08-14T16:30:21.310Z","event":"replay.result","status":"success"}

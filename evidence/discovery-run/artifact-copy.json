@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "1.0",
+  "capability": {
+    "id": "member-savings-lookup",
+    "version": "1.0.0",
+    "title": "Lookup Member Savings Balance",
+    "description": "Authenticates as an operator and retrieves the current savings balance for a specific member ID.",
+    "approvalState": "draft"
+  },
+  "surface": {
+    "kind": "web",
+    "app": "MFCU Teller Console",
+    "appVersion": "2.4.1900",
+    "entryUrl": "http://127.0.0.1:4173/"
+  },
+  "inputs": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "description": "The unique identifier for the member",
+      "required": true,
+      "secret": false,
+      "pattern": "^[0-9]{1,10}$"
+    },
+    {
+      "name": "operator_id",
+      "type": "string",
+      "description": "The operator login ID",
+      "required": true,
+      "secret": true,
+      "pattern": "^[a-zA-Z0-9]{3,20}$"
+    },
+    {
+      "name": "passcode",
+      "type": "string",
+      "description": "The operator authentication passcode",
+      "required": true,
+      "secret": true,
+      "pattern": "^.{4,16}$"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "savings_balance",
+      "type": "money",
+      "description": "Current balance of the Regular Share savings account"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "note": "entry point",
+      "risk": "reversible",
+      "action": "navigate",
+      "url": "http://127.0.0.1:4173/"
+    },
+    {
+      "id": "s2",
+      "note": "I need to sign in to the teller console to access member information.",
+      "risk": "reversible",
+      "action": "fill",
+      "target": {
+        "description": "textbox \"Operator ID:\"",
+        "frame": "top",
+        "candidates": [
+          {
+            "strategy": "label-text",
+            "label": "Operator ID:"
+          },
+          {
+            "strategy": "css",
+            "css": "body > form:nth-of-type(1) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(2) > td:nth-of-type(2) > input:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: I need to sign in to the teller console to access member information.. Ranked semantic-first: label-text survives markup changes in label-less legacy forms; structural CSS recorded only as last resort (its use is flagged as drift)."
+      },
+      "value": "{{operator_id}}"
+    },
+    {
+      "id": "s3",
+      "note": "Filling the passcode field to proceed with sign in.",
+      "risk": "reversible",
+      "action": "fill",
+      "target": {
+        "description": "textbox \"Passcode:\"",
+        "frame": "top",
+        "candidates": [
+          {
+            "strategy": "label-text",
+            "label": "Passcode:"
+          },
+          {
+            "strategy": "css",
+            "css": "body > form:nth-of-type(1) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(3) > td:nth-of-type(2) > input:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: Filling the passcode field to proceed with sign in.. Ranked semantic-first: label-text survives markup changes in label-less legacy forms; structural CSS recorded only as last resort (its use is flagged as drift)."
+      },
+      "value": "{{passcode}}"
+    },
+    {
+      "id": "s4",
+      "note": "Signing in to the teller console to access member search.",
+      "risk": "reversible",
+      "action": "click",
+      "target": {
+        "description": "button \"Sign In\"",
+        "frame": "top",
+        "candidates": [
+          {
+            "strategy": "role",
+            "role": "button",
+            "name": "Sign In"
+          },
+          {
+            "strategy": "text",
+            "text": "Sign In"
+          },
+          {
+            "strategy": "css",
+            "css": "body > form:nth-of-type(1) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(4) > td:nth-of-type(2) > input:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: Signing in to the teller console to access member search.. Ranked semantic-first: accessible role+name survives cosmetic drift; visible text is the human-stable identity; structural CSS recorded only as last resort (its use is flagged as drift)."
+      }
+    },
+    {
+      "id": "s5",
+      "note": "I need to navigate to the Member Inquiry page to look up the member.",
+      "risk": "reversible",
+      "action": "click",
+      "target": {
+        "description": "link \"Member Inquiry\"",
+        "frame": "nav",
+        "candidates": [
+          {
+            "strategy": "role",
+            "role": "link",
+            "name": "Member Inquiry"
+          },
+          {
+            "strategy": "text",
+            "text": "Member Inquiry"
+          },
+          {
+            "strategy": "css",
+            "css": "body > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(3) > td:nth-of-type(1) > a:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: I need to navigate to the Member Inquiry page to look up the member.. Ranked semantic-first: accessible role+name survives cosmetic drift; visible text is the human-stable identity; structural CSS recorded only as last resort (its use is flagged as drift)."
+      }
+    },
+    {
+      "id": "s6",
+      "note": "I need to enter the member ID into the search field to look up the member's account.",
+      "risk": "reversible",
+      "action": "fill",
+      "target": {
+        "description": "textbox \"Member Number:\"",
+        "frame": "main",
+        "candidates": [
+          {
+            "strategy": "label-text",
+            "label": "Member Number:"
+          },
+          {
+            "strategy": "css",
+            "css": "body > form:nth-of-type(1) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(2) > td:nth-of-type(2) > input:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: I need to enter the member ID into the search field to look up the member's account.. Ranked semantic-first: label-text survives markup changes in label-less legacy forms; structural CSS recorded only as last resort (its use is flagged as drift)."
+      },
+      "value": "{{member_id}}"
+    },
+    {
+      "id": "s7",
+      "note": "The member ID has been entered, now I need to click the Search button to retrieve the member's information.",
+      "risk": "reversible",
+      "action": "click",
+      "target": {
+        "description": "button \"Search\"",
+        "frame": "main",
+        "candidates": [
+          {
+            "strategy": "role",
+            "role": "button",
+            "name": "Search"
+          },
+          {
+            "strategy": "text",
+            "text": "Search"
+          },
+          {
+            "strategy": "css",
+            "css": "body > form:nth-of-type(1) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(3) > td:nth-of-type(2) > input:nth-of-type(1)"
+          }
+        ],
+        "reasoning": "chosen by model: The member ID has been entered, now I need to click the Search button to retrieve the member's information.. Ranked semantic-first: accessible role+name survives cosmetic drift; visible text is the human-stable identity; structural CSS recorded only as last resort (its use is flagged as drift)."
+      }
+    },
+    {
+      "id": "s8",
+      "note": "The member profile is loaded, now I need to extract the savings balance.",
+      "risk": "reversible",
+      "action": "extract",
+      "target": {
+        "description": "Current balance of the Regular Share savings account",
+        "frame": "main",
+        "candidates": [
+          {
+            "strategy": "table-cell",
+            "rowContains": "Savings — Regular Share",
+            "column": 2
+          }
+        ],
+        "reasoning": "data-table cell addressed by row text \"Savings — Regular Share\" + column 2 — row identity is semantic, column order is the stable part of this screen"
+      },
+      "output": "savings_balance"
+    }
+  ],
+  "detectors": [
+    {
+      "id": "invalid-credentials",
+      "when": {
+        "frame": "main",
+        "textMatches": "(invalid|incorrect|failed|denied|unauthorized)"
+      },
+      "classify": "hard_failure",
+      "outcomeCode": "AUTH_FAILURE",
+      "message": "Authentication failed. Please check operator ID and passcode."
+    },
+    {
+      "id": "member-not-found",
+      "when": {
+        "frame": "main",
+        "textMatches": "(no member found|member not found|no results)|no \\w+ (was )?found|not found|no (records?|results?|matches?)( found)?|does not exist"
+      },
+      "classify": "business_outcome",
+      "outcomeCode": "MEMBER_NOT_FOUND",
+      "message": "The requested member ID does not exist in the system."
+    },
+    {
+      "id": "session-timeout",
+      "when": {
+        "frame": "main",
+        "textMatches": "(session expired|timed out|please log in)|session (has )?(expired|timed out)|logged out due to inactivity"
+      },
+      "classify": "recoverable",
+      "outcomeCode": "SESSION_EXPIRED",
+      "message": "Session expired during lookup.",
+      "recovery": {
+        "kind": "rerun-steps",
+        "fromStep": "s1",
+        "maxAttempts": 1
+      }
+    },
+    {
+      "id": "server-error",
+      "when": {
+        "frame": "main",
+        "textMatches": "(internal server error|service unavailable|500|503)"
+      },
+      "classify": "hard_failure",
+      "outcomeCode": "SERVER_ERROR",
+      "message": "The server encountered an error while processing the request."
+    },
+    {
+      "id": "lib-permission-denied",
+      "when": {
+        "frame": "main",
+        "textMatches": "(access|permission) (is )?(denied|restricted)|requires (supervisor|manager|admin)|not authorized"
+      },
+      "classify": "business_outcome",
+      "outcomeCode": "PERMISSION_DENIED",
+      "message": "The operator is not authorized for this record or action."
+    },
+    {
+      "id": "lib-server-error",
+      "when": {
+        "frame": "main",
+        "textMatches": "http 50[0-4]|ORA-\\d+|internal (server )?error|unexpected error|contact (it|support)"
+      },
+      "classify": "hard_failure",
+      "outcomeCode": "APP_SERVER_ERROR",
+      "message": "The application returned a server error."
+    }
+  ],
+  "successCheckpoint": {
+    "frame": "main",
+    "textMatches": "Accounts.*Savings.*Regular Share.*S-0001.*\\$[0-9,]+\\.[0-9]{2}",
+    "description": "Verify that the savings account information is displayed on the member profile page."
+  },
+  "provenance": {
+    "recordedAt": "2026-08-14T16:30:04.721Z",
+    "recordedBy": "gemini/gemini-3.1-flash-lite",
+    "discoveryRunId": "20260814-122902",
+    "goal": "Look up member 12345 and read their current savings balance"
+  }
+}
