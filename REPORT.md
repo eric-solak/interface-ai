@@ -2,21 +2,65 @@
 
 ## 1. Architecture
 
-One TypeScript process, three engines around one schema:
+One TypeScript process. Two engines share one schema, one perception seam and
+one guardrail layer; only discovery links against the model provider.
 
+```mermaid
+flowchart LR
+    subgraph ENTRY["entrypoints · cli.ts"]
+        direction TB
+        CD["discover"]
+        CR["replay"]
+        CO["operator"]
+    end
+
+    subgraph ENGINES["engines"]
+        direction TB
+        AG["agent.ts<br/>discovery loop<br/>artifact recorder"]
+        RP["replay.ts<br/>deterministic executor<br/>error taxonomy"]
+        ES["escalate.ts<br/>control transfer"]
+    end
+
+    subgraph SEAMS["adapter seams"]
+        direction TB
+        SF["surface.ts<br/><i>Surface</i> interface<br/>locator cascade"]
+        LM["llm.ts<br/>provider seam"]
+    end
+
+    subgraph EXT["external systems"]
+        direction TB
+        BR["Chromium<br/>via Playwright"]
+        API["LLM API<br/>free tier"]
+        OP["human operator"]
+    end
+
+    CD --> AG
+    CR --> RP
+    CO --> ES
+
+    AG --> LM --> API
+    AG --> SF
+    RP --> SF
+    SF --> BR
+
+    AG -. "stuck" .-> ES
+    RP -. "risky · unexplained" .-> ES
+    ES <== "live session" ==> OP
+
+    AG == "writes" ==> AR[("artifacts/")]
+    AR == "reads" ==> RP
+
+    ENGINES -. "every action" .-> PO["policy.ts<br/>allowlist · risk · redaction"]
+    ENGINES -. "every step" .-> EV["evidence.ts<br/>logs · screenshots"]
+    ES <--> CTL[("control ledger")]
+    EV --> EVD[("evidence/")]
 ```
-                      ┌─ discovery (LLM loop) ──┐
- goal + params ──────►│  observe→decide→act     │──► CapabilityArtifact (zod)
-                      └─ records via the same   │         │
-                         locator cascade ───────┘         ▼
-                      ┌─ replay (no LLM) ────────────────────────────┐
- artifact + params ──►│  resolve→act→checkpoint, detector taxonomy   │──► RunResult
-                      └──────────────┬───────────────────────────────┘
-                                     ▼ stuck / risky / unexplained
-                      ┌─ escalation: control ledger + operator CLI ──┐
-                      │  pause → cede live session → resume          │
-                      └──────────────────────────────────────────────┘
-```
+
+The load-bearing property is what is *absent*: `replay.ts` has no edge to
+`llm.ts`. Determinism is enforced by the dependency graph, not by discipline —
+the production path cannot reach a model even by mistake. Everything that
+touches a UI goes through the single `Surface` interface, which is the seam a
+desktop or screenshot-based implementation would slot into.
 
 Key decisions:
 
