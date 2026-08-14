@@ -1,0 +1,10 @@
+{"at":"2026-08-14T16:30:23.217Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:30:23.334Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:23.498Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:23.618Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:23.778Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:24.068Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:24.225Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:24.381Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:24.498Z","event":"replay.condition_detected","detectorId":"member-not-found","classify":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}
+{"at":"2026-08-14T16:30:24.534Z","event":"replay.result","status":"business_outcome","outcomeCode":"MEMBER_NOT_FOUND"}

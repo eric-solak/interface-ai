@@ -1,0 +1,212 @@
+[
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/",
+      "title": "MFCU Teller Console — Sign In",
+      "nodeList": [
+        "#0 [frame:top] textbox \"Operator ID:\"",
+        "#1 [frame:top] textbox \"Passcode:\"",
+        "#2 [frame:top] button \"Sign In\""
+      ]
+    },
+    "decision": {
+      "reason": "I need to sign in to the teller console to access member information.",
+      "action": "fill",
+      "nodeIndex": 0,
+      "value": "{{operator_id}}"
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/",
+      "title": "MFCU Teller Console — Sign In",
+      "nodeList": [
+        "#0 [frame:top] textbox \"Operator ID:\" (value: \"[REDACTED]\")",
+        "#1 [frame:top] textbox \"Passcode:\"",
+        "#2 [frame:top] button \"Sign In\""
+      ]
+    },
+    "decision": {
+      "reason": "Filling the passcode field to proceed with sign in.",
+      "action": "fill",
+      "nodeIndex": 1,
+      "value": "{{passcode}}"
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/",
+      "title": "MFCU Teller Console — Sign In",
+      "nodeList": [
+        "#0 [frame:top] textbox \"Operator ID:\" (value: \"[REDACTED]\")",
+        "#1 [frame:top] textbox \"Passcode:\" (value: \"[REDACTED]\")",
+        "#2 [frame:top] button \"Sign In\""
+      ]
+    },
+    "decision": {
+      "reason": "Signing in to the teller console to access member search.",
+      "action": "click",
+      "nodeIndex": 2
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/console",
+      "title": "MFCU Teller Console",
+      "nodeList": [
+        "#0 [frame:nav] link \"Home\"",
+        "#1 [frame:nav] link \"Member Inquiry\"",
+        "#2 [frame:nav] link \"Reports\"",
+        "#3 [frame:nav] link \"Sign Out\"",
+        "#4 [frame:main] button \"Continue\""
+      ]
+    },
+    "decision": {
+      "reason": "I need to navigate to the Member Inquiry page to look up the member.",
+      "action": "click",
+      "nodeIndex": 1
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/console",
+      "title": "MFCU Teller Console",
+      "nodeList": [
+        "#0 [frame:nav] link \"Home\"",
+        "#1 [frame:nav] link \"Member Inquiry\"",
+        "#2 [frame:nav] link \"Reports\"",
+        "#3 [frame:nav] link \"Sign Out\"",
+        "#4 [frame:main] textbox \"Member Number:\"",
+        "#5 [frame:main] button \"Search\""
+      ]
+    },
+    "decision": {
+      "reason": "I need to enter the member ID into the search field to look up the member's account.",
+      "action": "fill",
+      "nodeIndex": 4,
+      "value": "{{member_id}}"
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/console",
+      "title": "MFCU Teller Console",
+      "nodeList": [
+        "#0 [frame:nav] link \"Home\"",
+        "#1 [frame:nav] link \"Member Inquiry\"",
+        "#2 [frame:nav] link \"Reports\"",
+        "#3 [frame:nav] link \"Sign Out\"",
+        "#4 [frame:main] textbox \"Member Number:\" (value: \"12345\")",
+        "#5 [frame:main] button \"Search\""
+      ]
+    },
+    "decision": {
+      "reason": "The member ID has been entered, now I need to click the Search button to retrieve the member's information.",
+      "action": "click",
+      "nodeIndex": 5
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/console",
+      "title": "MFCU Teller Console",
+      "nodeList": [
+        "#0 [frame:nav] link \"Home\"",
+        "#1 [frame:nav] link \"Member Inquiry\"",
+        "#2 [frame:nav] link \"Reports\"",
+        "#3 [frame:nav] link \"Sign Out\""
+      ]
+    },
+    "decision": {
+      "reason": "The member profile is loaded, now I need to extract the savings balance.",
+      "action": "extract",
+      "extract": {
+        "frame": "main",
+        "outputName": "savings_balance",
+        "outputDescription": "Current balance of the Regular Share savings account",
+        "expectedFormat": "money",
+        "rowContains": "Savings — Regular Share",
+        "column": 2
+      }
+    }
+  },
+  {
+    "observation": {
+      "url": "http://127.0.0.1:4173/console",
+      "title": "MFCU Teller Console",
+      "nodeList": [
+        "#0 [frame:nav] link \"Home\"",
+        "#1 [frame:nav] link \"Member Inquiry\"",
+        "#2 [frame:nav] link \"Reports\"",
+        "#3 [frame:nav] link \"Sign Out\""
+      ]
+    },
+    "decision": {
+      "reason": "The savings balance has been successfully extracted. The goal is complete.",
+      "action": "done",
+      "checkpointRegex": "Accounts.*Savings.*Regular Share.*S-0001.*\\$[0-9,]+\\.[0-9]{2}",
+      "checkpointDescription": "Verify that the savings account information is displayed on the member profile page."
+    }
+  },
+  {
+    "finalize": {
+      "capabilityId": "member-savings-lookup",
+      "title": "Lookup Member Savings Balance",
+      "description": "Authenticates as an operator and retrieves the current savings balance for a specific member ID.",
+      "inputs": [
+        {
+          "name": "member_id",
+          "type": "string",
+          "description": "The unique identifier for the member",
+          "pattern": "^[0-9]{1,10}$"
+        },
+        {
+          "name": "operator_id",
+          "type": "string",
+          "description": "The operator login ID",
+          "pattern": "^[a-zA-Z0-9]{3,20}$"
+        },
+        {
+          "name": "passcode",
+          "type": "string",
+          "description": "The operator authentication passcode",
+          "pattern": "^.{4,16}$"
+        }
+      ],
+      "detectors": [
+        {
+          "id": "invalid-credentials",
+          "textMatches": "(invalid|incorrect|failed|denied|unauthorized)",
+          "classify": "hard_failure",
+          "outcomeCode": "AUTH_FAILURE",
+          "message": "Authentication failed. Please check operator ID and passcode."
+        },
+        {
+          "id": "member-not-found",
+          "textMatches": "(no member found|member not found|no results)",
+          "classify": "business_outcome",
+          "outcomeCode": "MEMBER_NOT_FOUND",
+          "message": "The requested member ID does not exist in the system."
+        },
+        {
+          "id": "session-timeout",
+          "textMatches": "(session expired|timed out|please log in)",
+          "classify": "recoverable",
+          "outcomeCode": "SESSION_EXPIRED",
+          "message": "Session expired during lookup.",
+          "recovery": {
+            "kind": "rerun-steps",
+            "fromStep": "s1"
+          }
+        },
+        {
+          "id": "server-error",
+          "textMatches": "(internal server error|service unavailable|500|503)",
+          "classify": "hard_failure",
+          "outcomeCode": "SERVER_ERROR",
+          "message": "The server encountered an error while processing the request."
+        }
+      ]
+    }
+  }
+]

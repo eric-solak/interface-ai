@@ -1,0 +1,11 @@
+{
+  "capabilityId": "member-savings-lookup",
+  "runId": "20260814-123031",
+  "evidenceDir": "evidence\\replay-4-invalid-input",
+  "status": "hard_failure",
+  "failure": {
+    "expected": "input \"member_id\" matching /^[0-9]{1,10}$/",
+    "observed": "\"abc\""
+  },
+  "durationMs": 0
+}

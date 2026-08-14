@@ -1,0 +1,20 @@
+{"at":"2026-08-14T16:30:34.544Z","event":"replay.fault_injected","inject":"expire (session dies after 4 requests)"}
+{"at":"2026-08-14T16:30:34.546Z","event":"replay.start","capability":"member-savings-lookup@1.0.0","approvalState":"draft"}
+{"at":"2026-08-14T16:30:34.569Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:34.743Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:34.888Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:35.201Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:35.479Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:35.637Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:35.874Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:46.127Z","event":"replay.condition_detected","detectorId":"session-timeout","classify":"recoverable","outcomeCode":"SESSION_EXPIRED"}
+{"at":"2026-08-14T16:30:46.128Z","event":"replay.recovery","detectorId":"session-timeout","kind":"rerun-steps","attempt":1}
+{"at":"2026-08-14T16:30:46.149Z","event":"replay.step_ok","stepId":"s1","action":"navigate"}
+{"at":"2026-08-14T16:30:46.283Z","event":"replay.step_ok","stepId":"s2","action":"fill"}
+{"at":"2026-08-14T16:30:46.400Z","event":"replay.step_ok","stepId":"s3","action":"fill"}
+{"at":"2026-08-14T16:30:46.566Z","event":"replay.step_ok","stepId":"s4","action":"click"}
+{"at":"2026-08-14T16:30:46.781Z","event":"replay.step_ok","stepId":"s5","action":"click"}
+{"at":"2026-08-14T16:30:46.917Z","event":"replay.step_ok","stepId":"s6","action":"fill"}
+{"at":"2026-08-14T16:30:47.059Z","event":"replay.step_ok","stepId":"s7","action":"click"}
+{"at":"2026-08-14T16:30:47.182Z","event":"replay.step_ok","stepId":"s8","action":"extract"}
+{"at":"2026-08-14T16:30:47.323Z","event":"replay.result","status":"success"}

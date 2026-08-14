@@ -1,0 +1,11 @@
+{
+  "capabilityId": "member-savings-lookup",
+  "runId": "20260814-123048",
+  "evidenceDir": "evidence\\replay-6-server-error-hard-failure",
+  "status": "hard_failure",
+  "failure": {
+    "expected": "normal application state",
+    "observed": "The server encountered an error while processing the request."
+  },
+  "durationMs": 1248
+}

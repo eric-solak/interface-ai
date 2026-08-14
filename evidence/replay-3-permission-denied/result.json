@@ -1,0 +1,8 @@
+{
+  "capabilityId": "member-savings-lookup",
+  "runId": "20260814-123027",
+  "evidenceDir": "evidence\\replay-3-permission-denied",
+  "status": "business_outcome",
+  "outcomeCode": "PERMISSION_DENIED",
+  "durationMs": 1392
+}

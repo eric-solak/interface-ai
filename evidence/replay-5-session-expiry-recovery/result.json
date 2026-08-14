@@ -1,0 +1,10 @@
+{
+  "capabilityId": "member-savings-lookup",
+  "runId": "20260814-123034",
+  "evidenceDir": "evidence\\replay-5-session-expiry-recovery",
+  "status": "success",
+  "outputs": {
+    "savings_balance": "$4,982.17"
+  },
+  "durationMs": 12777
+}
